@@ -27,28 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jbc.androidlauncher.data.InfoApp
 
-
-//launchApp: () -> Unit
-
-//@Preview
-//@Composable
-//fun LauncherScreen(nombre: String) {
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .background(Color.Black)
-//        ,
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//        verticalArrangement = Arrangement.Center
-//    ) {
-//        Text(nombre, color = Color.White)
-////        Button(onClick = {  }) //launchApp()
-////        {
-////            Text(nombre)
-////        }
-//    }
-//}
-
 @Composable
 fun LauncherScreen(viewModel: LauncherScreenViewModel)
 {
@@ -72,19 +50,13 @@ fun AppItem(app: InfoApp, context: Context) {
     ) {
         Text(
             text = app.name,
-            modifier = Modifier.weight(1f),
-            fontSize = 16.sp
+            modifier = Modifier.weight(1f)
+                .clickable {
+                    val intent = context.packageManager.getLaunchIntentForPackage(app.packageName)
+                    context.startActivity(intent)
+                },
+            fontSize = 16.sp,
         )
-        Button(onClick = {
-            val intent = context.packageManager.getLaunchIntentForPackage(app.packageName)
-            if(intent != null) {
-                context.startActivity(intent)
-            } else {
-                Toast.makeText(context, "no se puede abrir", Toast.LENGTH_SHORT).show()
-            }
-        }) {
-            Text(app.name)
-        }
     }
 }
 
