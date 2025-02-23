@@ -42,9 +42,8 @@ android {
 
 dependencies {
 
-    implementation(libs.hilt)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.navigation.compose)
+    implementation(libs.androidx.navigation.compose)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

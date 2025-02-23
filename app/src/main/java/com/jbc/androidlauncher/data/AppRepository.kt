@@ -1,23 +1,26 @@
 package com.jbc.androidlauncher.data
 
+import android.content.Context
 import android.content.pm.PackageManager
 
-class AppRepository(private val packageManager: PackageManager) {
+class AppRepository (private val context: Context) {
 
-    fun getAllApps(): List<InfoApp> {
-        val packagesAll = packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+    fun getAllApps(): List<AppInfo> {
+        val packageManager = context.packageManager
 
-        val packagesByUser = packagesAll
-            .mapNotNull { appInfo ->
-                val name = packageManager.getApplicationLabel(appInfo).toString()
-                val launchIntent = packageManager.getLaunchIntentForPackage(appInfo.packageName)
-
-                if(launchIntent != null) {
-                    InfoApp(name, appInfo.packageName, launchIntent)
-                } else {
-                    null
-                }
+        return packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+            .filter { appInfo ->
+                packageManager.getLaunchIntentForPackage(appInfo.packageName) != null
             }
-        return packagesByUser
+            .sortedBy { appInfo ->
+                packageManager.getApplicationLabel(appInfo).toString().lowercase()
+            }
+            .map { appInfo ->
+                AppInfo(
+                    name = packageManager.getApplicationLabel(appInfo).toString(),
+                    icon = packageManager.getApplicationIcon(appInfo),
+                    launchIntent = packageManager.getLaunchIntentForPackage(appInfo.packageName)!!
+                )
+            }
     }
 }
