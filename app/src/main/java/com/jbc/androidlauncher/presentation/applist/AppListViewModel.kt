@@ -14,8 +14,13 @@ class AppListViewModel (application: Application): AndroidViewModel(application)
 
     private val helper = AppRepository(application.applicationContext)
 
+    // Listado apps
     private val _apps = MutableStateFlow<List<AppInfo>>(emptyList())
     val apps: StateFlow<List<AppInfo>> = _apps.asStateFlow()
+
+    // App seleccionada de la lista
+    private val _selectedApp = MutableStateFlow<AppInfo?>(null)
+    val selectedApp: StateFlow<AppInfo?> = _selectedApp.asStateFlow()
 
     init {
         loadApps()
@@ -25,6 +30,16 @@ class AppListViewModel (application: Application): AndroidViewModel(application)
         viewModelScope.launch {
             _apps.value = helper.getAllApps()
         }
+    }
+
+    // Al mantener presionado guardamos el valor del app
+    fun onAppLongPress(app: AppInfo) {
+        _selectedApp.value = app
+    }
+
+    // Al cerrar el dialog cambiamos a null la app seleccionada
+    fun dismissDialog() {
+        _selectedApp.value = null
     }
 
 }

@@ -1,4 +1,4 @@
-package com.jbc.androidlauncher.presentation
+package com.jbc.androidlauncher.presentation.main
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,12 +10,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jbc.androidlauncher.ui.theme.BackgroundGrey
 
 @Composable
-fun MainScreen(navigateToList: () -> Unit) {
+fun MainScreen(
+    mainScreenViewModel: MainScreenViewModel,
+    navigateToList: () -> Unit
+) {
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -24,13 +26,13 @@ fun MainScreen(navigateToList: () -> Unit) {
         verticalArrangement = Arrangement.Center,
     ) {
 
-    }
+        Button(
+            modifier = Modifier
+                .padding(10.dp),
+            onClick = { navigateToList() }
+        ) {
+            Text("Ir a listado apps")
+        }
 
-    Button(
-        modifier = Modifier
-            .padding(10.dp),
-        onClick = { navigateToList() }
-    ) {
-        Text("Ir a listado apps")
     }
 }
