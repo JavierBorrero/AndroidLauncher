@@ -1,7 +1,7 @@
-package com.jbc.androidlauncher.presentation.applist
+package com.jbc.androidlauncher.presentation.preview
 
-import android.content.Intent
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
@@ -10,39 +10,31 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jbc.androidlauncher.data.AppInfo
-import com.jbc.androidlauncher.presentation.components.AppDialog
+import com.jbc.androidlauncher.R
 import com.jbc.androidlauncher.ui.theme.BackgroundGrey
 
+/*
+    Pasar composables sin parametros a este archivo para poder ver el resultado en el preview
+    mas comodo que estar quitando y poniendo parametros en la clase original
+ */
+
+@Preview
 @Composable
-fun AppListScreen(viewModel: AppListViewModel) {
-
-    // Lista de apps
-    val apps by viewModel.apps.collectAsState()
-
-    // Aplicacion seleccionada al mantener
-    val selectedApp by viewModel.selectedApp.collectAsState()
-
-    val context = LocalContext.current
-
-    // Si hay selected app mostrar el dialog
-    if(selectedApp != null){
-        AppDialog(selectedApp!!, onDismissRequest = { viewModel.dismissDialog() })
-    }
+fun PreviewElements() {
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -64,11 +56,8 @@ fun AppListScreen(viewModel: AppListViewModel) {
                 .fillMaxHeight()
                 .background(BackgroundGrey)
         ) {
-            items(apps) { app ->
+            items(20) {
                 AppItem(
-                    app,
-                    onAppClick = { launchIntent -> context.startActivity(launchIntent) },
-                    onLongPress = { viewModel.onAppLongPress(app) }
                 )
             }
         }
@@ -78,31 +67,29 @@ fun AppListScreen(viewModel: AppListViewModel) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AppItem(
-    app: AppInfo,
-    onAppClick: (Intent) -> Unit,
-    onLongPress: () -> Unit,
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .combinedClickable(
-                onClick = { onAppClick(app.launchIntent) },
+                onClick = {  },
                 onLongClick = {
-                    onLongPress()
+
                 },
             )
             .padding(10.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-//        Image(
-//            painter = BitmapPainter(app.icon),
-//            contentDescription = "icon",
-//            modifier = Modifier.size(24.dp),
-//            colorFilter = ColorFilter.tint(Color.White)
-//        )
+        Image(
+            painter = painterResource(R.drawable.icon_info),
+            contentDescription = "icon",
+            modifier = Modifier.size(24.dp),
+            colorFilter = ColorFilter.tint(Color.White)
+        )
         Text(
-            text = app.name,
-            modifier = Modifier.weight(1f),
+            text = "NombreApp",
+            modifier = Modifier
+                .padding(start = 10.dp),
             color = Color.White,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
@@ -110,26 +97,3 @@ fun AppItem(
         )
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
