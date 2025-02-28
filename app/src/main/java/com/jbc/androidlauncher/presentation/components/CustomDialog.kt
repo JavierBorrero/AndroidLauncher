@@ -2,6 +2,7 @@ package com.jbc.androidlauncher.presentation.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -75,6 +76,13 @@ fun AppDialog(
                     "Información de la app",
                 )
                 DialogActionButton(
+                    Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    painterResource(R.drawable.icon_add_home_screen),
+                    "Añadir a la pantalla de inicio"
+                )
+                DialogActionButton(
                      Modifier
                          .weight(1f)
                          .fillMaxWidth(),
@@ -86,26 +94,19 @@ fun AppDialog(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DialogActionButton(
     modifier: Modifier,
     painter: Painter,
     text: String,
+    // Añadir onClick
 ) {
 
     Row(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
-            .combinedClickable(
-                onClick = {
-
-                },
-                onLongClick = {
-
-                }
-            ),
+            .clickable {  },
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
