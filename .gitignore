@@ -31,3 +31,6 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# Ignorar archivo de Previews
+app/src/main/java/com/jbc/androidlauncher/presentation/preview/PreviewElements.kt
