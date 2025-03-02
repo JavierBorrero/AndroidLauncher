@@ -1,18 +1,15 @@
 package com.jbc.androidlauncher.presentation.applist
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jbc.androidlauncher.data.AppRepository
 import com.jbc.androidlauncher.data.AppInfo
+import com.jbc.androidlauncher.data.AppRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class AppListViewModel (application: Application): AndroidViewModel(application){
-
-    private val helper = AppRepository(application.applicationContext)
+class AppListViewModel (private val appRep: AppRepository): ViewModel() {
 
     // Listado apps
     private val _apps = MutableStateFlow<List<AppInfo>>(emptyList())
@@ -28,7 +25,7 @@ class AppListViewModel (application: Application): AndroidViewModel(application)
 
     private fun loadApps() {
         viewModelScope.launch {
-            _apps.value = helper.getAllApps()
+            _apps.value = appRep.getAllApps()
         }
     }
 
@@ -42,4 +39,7 @@ class AppListViewModel (application: Application): AndroidViewModel(application)
         _selectedApp.value = null
     }
 
+    fun onAddToMain() {
+        appRep.addAppToMainScreen(_selectedApp.value!!)
+    }
 }

@@ -33,4 +33,4 @@ google-services.json
 *.hprof
 
 # Ignorar archivo de Previews
-app/src/main/java/com/jbc/androidlauncher/presentation/preview/PreviewElements.kt
+app/src/main/java/com/jbc/androidlauncher/presentation/preview/

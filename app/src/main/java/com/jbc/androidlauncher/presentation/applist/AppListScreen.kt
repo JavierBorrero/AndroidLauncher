@@ -24,14 +24,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
-import androidx.core.graphics.get
-import com.jbc.androidlauncher.R
 import com.jbc.androidlauncher.data.AppInfo
 import com.jbc.androidlauncher.presentation.components.AppDialog
 import com.jbc.androidlauncher.ui.theme.BackgroundGrey
@@ -49,7 +46,10 @@ fun AppListScreen(viewModel: AppListViewModel) {
 
     // Si hay selected app mostrar el dialog
     if(selectedApp != null){
-        AppDialog(selectedApp!!, onDismissRequest = { viewModel.dismissDialog() })
+        AppDialog(
+            selectedApp!!,
+            onDismissRequest = { viewModel.dismissDialog() },
+            onAddToMain = { viewModel.onAddToMain() })
     }
 
     Column(

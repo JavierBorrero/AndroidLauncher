@@ -1,9 +1,8 @@
 package com.jbc.androidlauncher.presentation.components
 
-import androidx.compose.foundation.ExperimentalFoundationApi
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -35,7 +35,11 @@ import com.jbc.androidlauncher.data.AppInfo
 fun AppDialog(
     app: AppInfo?,
     onDismissRequest: () -> Unit,
+    onAddToMain: () -> Unit,
 ) {
+
+    val context = LocalContext.current
+
 
     Dialog(onDismissRequest = { onDismissRequest() }) {
         Card(
@@ -74,13 +78,18 @@ fun AppDialog(
                         .fillMaxWidth(),
                     painterResource(R.drawable.icon_info),
                     "Información de la app",
+                    onClick = {  }
                 )
                 DialogActionButton(
                     Modifier
                         .weight(1f)
                         .fillMaxWidth(),
                     painterResource(R.drawable.icon_add_home_screen),
-                    "Añadir a la pantalla de inicio"
+                    "Añadir a la pantalla de inicio",
+                    onClick = {
+                        onAddToMain()
+                        Toast.makeText(context, "llega aqui", Toast.LENGTH_SHORT).show()
+                    }
                 )
                 DialogActionButton(
                      Modifier
@@ -88,6 +97,7 @@ fun AppDialog(
                          .fillMaxWidth(),
                     painterResource(R.drawable.icon_uninstall),
                     "Desinstalar aplicación",
+                    onClick = {  }
                 )
             }
         }
@@ -99,14 +109,14 @@ fun DialogActionButton(
     modifier: Modifier,
     painter: Painter,
     text: String,
-    // Añadir onClick
+    onClick: () -> Unit,
 ) {
 
     Row(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
-            .clickable {  },
+            .clickable { onClick() },
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(

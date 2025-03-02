@@ -5,10 +5,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.jbc.androidlauncher.MyApp
 import com.jbc.androidlauncher.presentation.applist.AppListViewModel
 import com.jbc.androidlauncher.presentation.main.MainScreen
 import com.jbc.androidlauncher.presentation.applist.AppListScreen
 import com.jbc.androidlauncher.presentation.main.MainScreenViewModel
+import com.jbc.androidlauncher.presentation.viewModelFactory
 
 @Composable
 fun NavigationWrapper() {
@@ -17,13 +19,23 @@ fun NavigationWrapper() {
 
     NavHost(navController, startDestination = Main) {
         composable<Main> {
-            val mainScreenViewModel: MainScreenViewModel = viewModel()
+
+            val mainScreenViewModel = viewModel<MainScreenViewModel>(
+                factory = viewModelFactory {
+                    MainScreenViewModel(MyApp.appModule.appRepository)
+                }
+            )
 
             MainScreen(mainScreenViewModel) { navController.navigate(AppList) }
         }
 
         composable<AppList> {
-            val appListViewModel: AppListViewModel = viewModel()
+
+            val appListViewModel = viewModel<AppListViewModel>(
+                factory = viewModelFactory {
+                    AppListViewModel(MyApp.appModule.appRepository)
+                }
+            )
 
             AppListScreen(appListViewModel)
         }

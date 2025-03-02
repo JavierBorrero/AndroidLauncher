@@ -1,15 +1,15 @@
 package com.jbc.androidlauncher.presentation.main
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.jbc.androidlauncher.ui.theme.BackgroundGrey
 
@@ -19,20 +19,37 @@ fun MainScreen(
     navigateToList: () -> Unit
 ) {
 
+    //val apps by mainScreenViewModel.mainScreenApps.collectAsState()
+
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier.fillMaxSize()
-            .background(BackgroundGrey),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-    ) {
-
+    ){
         Button(
             modifier = Modifier
-                .padding(10.dp),
+                .fillMaxWidth()
+                .background(BackgroundGrey)
+                .padding(start = 10.dp, top = 36.dp),
             onClick = { navigateToList() }
         ) {
             Text("Ir a listado apps")
         }
-
+/*
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth()
+                .background(BackgroundGrey)
+        ) {
+            items(apps) { app ->
+                AppItem(
+                    app,
+                    onAppClick = { launchIntent -> context.startActivity(launchIntent) },
+                    onLongPress = {  }
+                )
+            }
+        }
+  */
     }
 }

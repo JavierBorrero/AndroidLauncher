@@ -1,25 +1,19 @@
 package com.jbc.androidlauncher.presentation.main
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import com.jbc.androidlauncher.data.AppInfo
+import androidx.lifecycle.ViewModel
 import com.jbc.androidlauncher.data.AppRepository
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
-class MainScreenViewModel(application: Application): AndroidViewModel(application) {
-
-    private val helper = AppRepository(application.applicationContext)
-
-    private val _mainScreenApps = MutableStateFlow<List<AppInfo>>(emptyList())
-    val mainScreenApps: StateFlow<List<AppInfo>> = _mainScreenApps.asStateFlow()
+class MainScreenViewModel(appRep: AppRepository): ViewModel() {
+/*
+    val mainScreenApps: StateFlow<List<AppInfo>> = helper.mainScreenApps
 
     init {
-        loadApps()
+        viewModelScope.launch {
+            appRep.mainScreenApps.collect { apps ->
+                Log.d("MAINSCREENVIEWMODEL", "${apps.size} apps")
+            }
+        }
     }
 
-    private fun loadApps() {
-
-    }
+ */
 }
