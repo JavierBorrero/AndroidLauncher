@@ -34,13 +34,13 @@ import com.jbc.androidlauncher.presentation.components.AppDialog
 import com.jbc.androidlauncher.ui.theme.BackgroundGrey
 
 @Composable
-fun AppListScreen(viewModel: AppListViewModel) {
+fun AppListScreen(appListViewModel: AppListViewModel) {
 
     // Lista de apps
-    val apps by viewModel.apps.collectAsState()
+    val apps by appListViewModel.apps.collectAsState()
 
     // Aplicacion seleccionada al mantener
-    val selectedApp by viewModel.selectedApp.collectAsState()
+    val selectedApp by appListViewModel.selectedApp.collectAsState()
 
     val context = LocalContext.current
 
@@ -48,8 +48,8 @@ fun AppListScreen(viewModel: AppListViewModel) {
     if(selectedApp != null){
         AppDialog(
             selectedApp!!,
-            onDismissRequest = { viewModel.dismissDialog() },
-            onAddToMain = { viewModel.onAddToMain() })
+            onDismissRequest = { appListViewModel.dismissDialog() },
+            onAddToMain = { appListViewModel.onAddToMain() })
     }
 
     Column(
@@ -76,7 +76,7 @@ fun AppListScreen(viewModel: AppListViewModel) {
                 AppItem(
                     app,
                     onAppClick = { launchIntent -> context.startActivity(launchIntent) },
-                    onLongPress = { viewModel.onAppLongPress(app) }
+                    onLongPress = { appListViewModel.onAppLongPress(app) }
                 )
             }
         }
@@ -119,26 +119,3 @@ fun AppItem(
         )
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

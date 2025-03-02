@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 class AppRepositoryImpl (private val context: Context): AppRepository {
 
     private val _mainScreenApps =  MutableStateFlow<List<AppInfo>>(emptyList())
-    val mainScreenApps: StateFlow<List<AppInfo>> get() = _mainScreenApps.asStateFlow()
+    override val mainScreenApps: StateFlow<List<AppInfo>> get() = _mainScreenApps.asStateFlow()
 
     override fun getAllApps(): List<AppInfo> {
         val packageManager = context.packageManager
