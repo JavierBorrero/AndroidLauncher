@@ -1,6 +1,5 @@
 package com.jbc.androidlauncher.presentation.components
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -21,7 +20,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -37,10 +35,6 @@ fun AppDialog(
     onDismissRequest: () -> Unit,
     onAddToMain: () -> Unit,
 ) {
-
-    val context = LocalContext.current
-
-
     Dialog(onDismissRequest = { onDismissRequest() }) {
         Card(
             modifier = Modifier
@@ -78,7 +72,9 @@ fun AppDialog(
                         .fillMaxWidth(),
                     painterResource(R.drawable.icon_info),
                     "Información de la app",
-                    onClick = {  }
+                    onClick = {
+                        onDismissRequest()
+                    }
                 )
                 DialogActionButton(
                     Modifier
@@ -88,7 +84,7 @@ fun AppDialog(
                     "Añadir a la pantalla de inicio",
                     onClick = {
                         onAddToMain()
-                        Toast.makeText(context, "llega aqui", Toast.LENGTH_SHORT).show()
+                        onDismissRequest()
                     }
                 )
                 DialogActionButton(
@@ -97,7 +93,9 @@ fun AppDialog(
                          .fillMaxWidth(),
                     painterResource(R.drawable.icon_uninstall),
                     "Desinstalar aplicación",
-                    onClick = {  }
+                    onClick = {
+                        onDismissRequest()
+                    }
                 )
             }
         }

@@ -59,7 +59,7 @@ fun AppListScreen(appListViewModel: AppListViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .background(BackgroundGrey)
-                .padding(start = 10.dp, top = 36.dp),
+                .padding(start = 10.dp, top = 36.dp, bottom = 10.dp),
             text = "Aplicaciones",
             color = Color.White,
             fontSize = 30.sp,

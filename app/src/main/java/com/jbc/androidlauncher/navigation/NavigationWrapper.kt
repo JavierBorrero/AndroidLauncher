@@ -6,10 +6,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jbc.androidlauncher.MyApp
-import com.jbc.androidlauncher.presentation.applist.AppListViewModel
-import com.jbc.androidlauncher.presentation.main.MainScreen
 import com.jbc.androidlauncher.presentation.applist.AppListScreen
-import com.jbc.androidlauncher.presentation.main.MainScreenViewModel
+import com.jbc.androidlauncher.presentation.applist.AppListViewModel
+import com.jbc.androidlauncher.presentation.screens.main.MainScreen
+import com.jbc.androidlauncher.presentation.screens.main.MainScreenViewModel
 import com.jbc.androidlauncher.presentation.viewModelFactory
 
 @Composable
@@ -22,7 +22,10 @@ fun NavigationWrapper() {
 
             val mainScreenViewModel = viewModel<MainScreenViewModel>(
                 factory = viewModelFactory {
-                    MainScreenViewModel(MyApp.appModule.appRepository)
+                    MainScreenViewModel(
+                        MyApp.appModule.appRepository,
+                        MyApp.appModule.systemRepository,
+                    )
                 }
             )
 

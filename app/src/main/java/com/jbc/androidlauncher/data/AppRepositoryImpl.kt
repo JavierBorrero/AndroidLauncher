@@ -2,7 +2,6 @@ package com.jbc.androidlauncher.data
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.util.Log
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -36,9 +35,6 @@ class AppRepositoryImpl (private val context: Context): AppRepository {
         if (!currentList.contains(app)) {
             currentList.add(app)
             _mainScreenApps.value = currentList
-            Log.d("APPREPOSITORY", "${app.name}, ${currentList.size}")
-        }else {
-            Log.d("APPREPOSITORY", "ya en la lista")
         }
     }
 }

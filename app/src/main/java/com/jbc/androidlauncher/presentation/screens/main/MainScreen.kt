@@ -1,4 +1,4 @@
-package com.jbc.androidlauncher.presentation.main
+package com.jbc.androidlauncher.presentation.screens.main
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -11,13 +11,16 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.jbc.androidlauncher.presentation.applist.AppItem
 import com.jbc.androidlauncher.ui.theme.BackgroundGrey
+import kotlinx.coroutines.delay
 
 @Composable
 fun MainScreen(
@@ -26,6 +29,15 @@ fun MainScreen(
 ) {
 
     val apps by mainScreenViewModel.mainScreenApps.collectAsState()
+    val batteryLevel by mainScreenViewModel.batteryLevel.collectAsState()
+
+    // actualizar cada minuto
+    LaunchedEffect(Unit) {
+        while(true) {
+            mainScreenViewModel.refreshBatteryLevel()
+            delay(60_000)
+        }
+    }
 
     val context = LocalContext.current
 
@@ -41,6 +53,11 @@ fun MainScreen(
         ) {
             Text("Ir a listado apps")
         }
+
+        Text(
+            fontSize = 32.sp,
+            text = "$batteryLevel",
+        )
 
         LazyColumn(
             modifier = Modifier
