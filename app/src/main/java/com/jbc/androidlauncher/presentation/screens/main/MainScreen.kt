@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jbc.androidlauncher.presentation.applist.AppItem
+import com.jbc.androidlauncher.presentation.screens.applist.AppItem
 import com.jbc.androidlauncher.ui.theme.BackgroundGrey
 import kotlinx.coroutines.delay
 
@@ -30,12 +30,14 @@ fun MainScreen(
 
     val apps by mainScreenViewModel.mainScreenApps.collectAsState()
     val batteryLevel by mainScreenViewModel.batteryLevel.collectAsState()
+    val formatedTime by mainScreenViewModel.systemTime.collectAsState()
 
     // actualizar cada minuto
     LaunchedEffect(Unit) {
         while(true) {
-            mainScreenViewModel.refreshBatteryLevel()
-            delay(60_000)
+            mainScreenViewModel.updateBatteryLevel()
+            mainScreenViewModel.updateFormatTime()
+            delay(10_000)
         }
     }
 
@@ -57,6 +59,11 @@ fun MainScreen(
         Text(
             fontSize = 32.sp,
             text = "$batteryLevel",
+        )
+
+        Text(
+            fontSize = 32.sp,
+            text = formatedTime,
         )
 
         LazyColumn(

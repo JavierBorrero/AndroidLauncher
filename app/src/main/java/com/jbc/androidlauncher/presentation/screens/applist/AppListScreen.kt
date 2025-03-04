@@ -1,4 +1,4 @@
-package com.jbc.androidlauncher.presentation.applist
+package com.jbc.androidlauncher.presentation.screens.applist
 
 import android.content.Intent
 import android.graphics.Bitmap

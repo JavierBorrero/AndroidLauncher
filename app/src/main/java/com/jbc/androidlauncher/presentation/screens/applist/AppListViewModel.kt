@@ -1,4 +1,4 @@
-package com.jbc.androidlauncher.presentation.applist
+package com.jbc.androidlauncher.presentation.screens.applist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
