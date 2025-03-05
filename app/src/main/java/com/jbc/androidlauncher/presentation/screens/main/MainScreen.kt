@@ -69,6 +69,7 @@ fun MainScreen(
                 .fillMaxHeight()
                 .fillMaxWidth()
                 .background(BackgroundGrey)
+                .padding(top = 10.dp)
         ) {
             items(apps) { app ->
                 AppItem(

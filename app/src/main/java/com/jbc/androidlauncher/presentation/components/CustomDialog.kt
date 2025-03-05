@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -39,7 +40,7 @@ fun AppDialog(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .wrapContentHeight()
                 .padding(8.dp),
             shape = RoundedCornerShape(16.dp),
             colors = CardDefaults.cardColors(
@@ -63,12 +64,12 @@ fun AppDialog(
 
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .padding(10.dp),
             ) {
                 DialogActionButton(
                     Modifier
-                        .weight(1f)
+                        .height(60.dp)
                         .fillMaxWidth(),
                     painterResource(R.drawable.icon_info),
                     "Información de la app",
@@ -78,7 +79,7 @@ fun AppDialog(
                 )
                 DialogActionButton(
                     Modifier
-                        .weight(1f)
+                        .height(60.dp)
                         .fillMaxWidth(),
                     painterResource(R.drawable.icon_add_home_screen),
                     "Añadir a la pantalla de inicio",
@@ -89,7 +90,7 @@ fun AppDialog(
                 )
                 DialogActionButton(
                      Modifier
-                         .weight(1f)
+                         .height(60.dp)
                          .fillMaxWidth(),
                     painterResource(R.drawable.icon_uninstall),
                     "Desinstalar aplicación",
@@ -114,6 +115,7 @@ fun DialogActionButton(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(12.dp))
+            .padding(start = 10.dp)
             .clickable { onClick() },
         verticalAlignment = Alignment.CenterVertically,
     ) {
