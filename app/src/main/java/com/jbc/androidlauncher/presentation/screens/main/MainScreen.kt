@@ -1,7 +1,9 @@
 package com.jbc.androidlauncher.presentation.screens.main
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +17,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,14 +59,9 @@ fun MainScreen(
             Text("Ir a listado apps")
         }
 
-        Text(
-            fontSize = 32.sp,
-            text = "$batteryLevel",
-        )
-
-        Text(
-            fontSize = 32.sp,
-            text = formatedTime,
+        SystemInfo(
+            batteryLevel,
+            formatedTime
         )
 
         LazyColumn(
@@ -80,5 +78,38 @@ fun MainScreen(
                 )
             }
         }
+    }
+}
+
+@Composable
+fun SystemInfo(
+    batLevel: Int,
+    formatTime: String,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(BackgroundGrey),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            modifier = Modifier
+                .padding(start = 10.dp),
+            fontSize = 32.sp,
+            text = formatTime,
+            color = Color.White,
+        )
+        Text(
+            fontSize = 32.sp,
+            text = "03/03",
+            color = Color.White
+        )
+        Text(
+            modifier = Modifier
+                .padding(end = 10.dp),
+            fontSize = 32.sp,
+            text = "$batLevel%",
+            color = Color.White,
+        )
     }
 }

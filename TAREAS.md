@@ -12,7 +12,7 @@
 
 ## MainScreen
 
-- Añadir hora, fecha, porcentaje bateria, volumen/vibracion/silencio, ...
+- Añadir hora, fecha, porcentaje bateria, volumen/vibracion/silencio, ... (hora, fecha, bateria :white_check_mark:)
 - Añadir CustomDialogs para eliminar de la lista principal de aplicaciones
 
 ## Otros
