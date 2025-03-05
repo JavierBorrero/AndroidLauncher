@@ -1,6 +1,8 @@
 package com.jbc.androidlauncher.presentation.screens.main
 
+import android.content.Intent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,6 +36,8 @@ fun MainScreen(
     val apps by mainScreenViewModel.mainScreenApps.collectAsState()
     val batteryLevel by mainScreenViewModel.batteryLevel.collectAsState()
     val formatedTime by mainScreenViewModel.systemTime.collectAsState()
+    val clockIntent = mainScreenViewModel.clockIntent
+    val calendarIntent = mainScreenViewModel.calendarIntent
 
     // actualizar cada minuto
     LaunchedEffect(Unit) {
@@ -61,7 +65,9 @@ fun MainScreen(
 
         SystemInfo(
             batteryLevel,
-            formatedTime
+            formatedTime,
+            onClockClick = { context.startActivity(clockIntent) },
+            onCalendarClick = { context.startActivity(calendarIntent) }
         )
 
         LazyColumn(
@@ -86,6 +92,8 @@ fun MainScreen(
 fun SystemInfo(
     batLevel: Int,
     formatTime: String,
+    onClockClick: () -> Unit,
+    onCalendarClick: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -95,12 +103,15 @@ fun SystemInfo(
     ) {
         Text(
             modifier = Modifier
-                .padding(start = 10.dp),
+                .padding(start = 10.dp)
+                .clickable { onClockClick() },
             fontSize = 32.sp,
             text = formatTime,
             color = Color.White,
         )
         Text(
+            modifier = Modifier
+                .clickable { onCalendarClick() },
             fontSize = 32.sp,
             text = "03/03",
             color = Color.White

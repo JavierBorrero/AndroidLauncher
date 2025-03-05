@@ -23,6 +23,9 @@ class MainScreenViewModel(
     private val _systemTime = MutableStateFlow(systemRep.getSystemDate())
     val systemTime = _systemTime.asStateFlow()
 
+    val clockIntent = systemRep.getClockIntent()
+    val calendarIntent = systemRep.getCalendarIntent()
+
     // actualizar el valor de _batteryLevel con la funcion de abajo
     fun updateBatteryLevel() {
         _batteryLevel.value = systemRep.getBatteryLevel()
