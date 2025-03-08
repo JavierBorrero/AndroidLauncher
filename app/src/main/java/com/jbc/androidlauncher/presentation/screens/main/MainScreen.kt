@@ -1,6 +1,5 @@
 package com.jbc.androidlauncher.presentation.screens.main
 
-import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.jbc.androidlauncher.presentation.screens.applist.AppItem
 import com.jbc.androidlauncher.ui.theme.BackgroundGrey
 import kotlinx.coroutines.delay
+import kotlinx.datetime.LocalDateTime
 
 @Composable
 fun MainScreen(
@@ -39,8 +39,8 @@ fun MainScreen(
     val clockIntent = mainScreenViewModel.clockIntent
     val calendarIntent = mainScreenViewModel.calendarIntent
 
-    // actualizar cada minuto
-    LaunchedEffect(Unit) {
+    // actualizar cada 10 segs
+    LaunchedEffect(true) {
         while(true) {
             mainScreenViewModel.updateBatteryLevel()
             mainScreenViewModel.updateFormatTime()
@@ -91,7 +91,7 @@ fun MainScreen(
 @Composable
 fun SystemInfo(
     batLevel: Int,
-    formatTime: String,
+    fTime: List<String>,
     onClockClick: () -> Unit,
     onCalendarClick: () -> Unit,
 ) {
@@ -106,14 +106,14 @@ fun SystemInfo(
                 .padding(start = 10.dp)
                 .clickable { onClockClick() },
             fontSize = 32.sp,
-            text = formatTime,
+            text = fTime[0],
             color = Color.White,
         )
         Text(
             modifier = Modifier
                 .clickable { onCalendarClick() },
             fontSize = 32.sp,
-            text = "03/03",
+            text = fTime[1],
             color = Color.White
         )
         Text(

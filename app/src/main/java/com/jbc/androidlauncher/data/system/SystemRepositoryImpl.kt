@@ -4,6 +4,12 @@ import android.content.Context
 import android.content.Context.BATTERY_SERVICE
 import android.content.Intent
 import android.os.BatteryManager
+import kotlinx.datetime.Clock
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.format
+import kotlinx.datetime.format.char
+import kotlinx.datetime.toLocalDateTime
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -21,12 +27,33 @@ class SystemRepositoryImpl(
     }
 
     // obtener fecha actual, formatear y devolver fecha
-    override fun getSystemDate(): String {
-        val date = Date()
-        val formatter = SimpleDateFormat("HH:mm", Locale.getDefault())
-        val formattedTime = formatter.format(date)
+    override fun getSystemDate(): List<String> {
 
-        return formattedTime
+        val now = Clock.System.now()
+        val dateTime = now.toLocalDateTime(TimeZone.currentSystemDefault())
+
+        val formatedTime = mutableListOf<String>()
+
+        val formatedHour = dateTime.format(
+            LocalDateTime.Format {
+                hour()
+                char(':')
+                minute()
+            }
+        )
+
+        val formatedDate = dateTime.format(
+            LocalDateTime.Format {
+                dayOfMonth()
+                char('/')
+                monthNumber()
+            }
+        )
+
+        formatedTime.add(formatedHour)
+        formatedTime.add(formatedDate)
+
+        return formatedTime
     }
 
     override fun getClockIntent(): Intent {
