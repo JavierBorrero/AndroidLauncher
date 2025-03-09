@@ -15,24 +15,32 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
+import com.jbc.androidlauncher.R
 import com.jbc.androidlauncher.data.AppInfo
 import com.jbc.androidlauncher.presentation.components.AppDialog
 import com.jbc.androidlauncher.ui.theme.BackgroundGrey
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppListScreen(appListViewModel: AppListViewModel) {
 
@@ -53,18 +61,34 @@ fun AppListScreen(appListViewModel: AppListViewModel) {
     }
 
     Column(
-        modifier = Modifier.fillMaxSize()
-    ){
-        Text(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(BackgroundGrey)
+    ) {
+
+        TopAppBar(
             modifier = Modifier
-                .fillMaxWidth()
-                .background(BackgroundGrey)
-                .padding(start = 10.dp, top = 36.dp, bottom = 10.dp),
-            text = "Aplicaciones",
-            color = Color.White,
-            fontSize = 30.sp,
-            fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Monospace
+                .padding(top = 18.dp),
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = BackgroundGrey,
+            ),
+            title = { Text(
+                fontSize = 30.sp,
+                text = "Aplicaciones",
+                color = Color.White,
+                fontFamily = FontFamily.Monospace,
+                fontWeight = FontWeight.Bold
+            ) },
+            actions = {
+                IconButton(onClick = { }) {
+                    Image(
+                        painter = painterResource(R.drawable.icon_more_vert),
+                        contentDescription = "icon",
+                        modifier = Modifier.size(34.dp),
+                        colorFilter = ColorFilter.tint(Color.White)
+                    )
+                }
+            }
         )
 
         LazyColumn(

@@ -1,5 +1,6 @@
 package com.jbc.androidlauncher.navigation
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -28,6 +29,8 @@ fun NavigationWrapper() {
                     )
                 }
             )
+
+            BackHandler {  }
 
             MainScreen(mainScreenViewModel) { navController.navigate(AppList) }
         }

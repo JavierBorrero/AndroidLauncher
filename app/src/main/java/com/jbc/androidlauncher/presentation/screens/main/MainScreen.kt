@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.sp
 import com.jbc.androidlauncher.presentation.screens.applist.AppItem
 import com.jbc.androidlauncher.ui.theme.BackgroundGrey
 import kotlinx.coroutines.delay
-import kotlinx.datetime.LocalDateTime
 
 @Composable
 fun MainScreen(
