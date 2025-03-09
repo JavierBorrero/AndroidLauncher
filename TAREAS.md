@@ -3,7 +3,7 @@
 ## AppListScreen
 
 - Optimizar la lista de AppListScreen (guardar la busqueda en una variable y que no se tenga que hacer la busqueda cada vez (?))
-- Añadir un buscador a AppListScreen
+- ~Añadir un buscador a AppListScreen~
 - Añadir un filtro a la lista (ordenar por orden alfabetico, fecha de instalacion, ... (?))
 
 ## AppItem
