@@ -37,4 +37,9 @@ class AppRepositoryImpl (private val context: Context): AppRepository {
             _mainScreenApps.value = currentList
         }
     }
+
+    override fun searchQuery(query: String): Boolean {
+
+        return query.contains(query, ignoreCase = true)
+    }
 }

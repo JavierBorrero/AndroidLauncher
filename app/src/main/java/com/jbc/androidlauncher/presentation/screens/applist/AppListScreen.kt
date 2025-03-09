@@ -16,8 +16,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -30,6 +33,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -49,6 +53,10 @@ fun AppListScreen(appListViewModel: AppListViewModel) {
 
     // Aplicacion seleccionada al mantener
     val selectedApp by appListViewModel.selectedApp.collectAsState()
+
+    // Buscador
+    val searchText by appListViewModel.searchText.collectAsState()
+    val isSearching by appListViewModel.isSearching.collectAsState()
 
     val context = LocalContext.current
 
@@ -72,21 +80,48 @@ fun AppListScreen(appListViewModel: AppListViewModel) {
             colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = BackgroundGrey,
             ),
-            title = { Text(
-                fontSize = 30.sp,
-                text = "Aplicaciones",
-                color = Color.White,
-                fontFamily = FontFamily.Monospace,
-                fontWeight = FontWeight.Bold
-            ) },
-            actions = {
-                IconButton(onClick = { }) {
-                    Image(
-                        painter = painterResource(R.drawable.icon_more_vert),
-                        contentDescription = "icon",
-                        modifier = Modifier.size(34.dp),
-                        colorFilter = ColorFilter.tint(Color.White)
+            title = {
+                if(isSearching) {
+                    TextField(
+                        value = searchText,
+                        onValueChange = appListViewModel::onSearchTextChanged,
+                        placeholder = { Text("Buscar...") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                        textStyle = TextStyle(color = Color.White),
+                        colors = TextFieldDefaults.colors(
+                            unfocusedContainerColor = BackgroundGrey,
+                            cursorColor = Color.White
+                        )
                     )
+                } else {
+                    Text(
+                        fontSize = 30.sp,
+                        text = "Aplicaciones",
+                        color = Color.White,
+                        fontFamily = FontFamily.Monospace,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            },
+            actions = {
+
+                if(isSearching) {
+                    IconButton(onClick = { appListViewModel.setSearch(false) }) {
+                        Image(
+                            painter = painterResource(R.drawable.icon_arrow_back),
+                            contentDescription = "icon",
+                            modifier = Modifier.size(34.dp)
+                        )
+                    }
+                } else {
+                    IconButton(onClick = { appListViewModel.setSearch(true) }) {
+                        Image(
+                            painter = painterResource(R.drawable.icon_search),
+                            contentDescription = "icon",
+                            modifier = Modifier.size(34.dp)
+                        )
+                    }
                 }
             }
         )

@@ -8,6 +8,8 @@ interface AppRepository {
 
     fun addAppToMainScreen(app: AppInfo)
 
+    fun searchQuery(query: String): Boolean
+
     val mainScreenApps: StateFlow<List<AppInfo>>
 
 }
