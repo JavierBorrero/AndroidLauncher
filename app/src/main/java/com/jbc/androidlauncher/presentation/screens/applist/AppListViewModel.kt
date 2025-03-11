@@ -43,11 +43,7 @@ class AppListViewModel (private val appRep: AppRepository): ViewModel() {
             _apps.value
         )
 
-    init {
-        loadApps()
-    }
-
-    private fun loadApps() {
+    fun loadApps() {
         viewModelScope.launch {
             _apps.value = appRep.getAllApps()
         }

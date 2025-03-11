@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface AppRepository {
 
-    fun getAllApps(): List<AppInfo>
+    suspend fun getAllApps(): List<AppInfo>
 
     fun addAppToMainScreen(app: AppInfo)
 

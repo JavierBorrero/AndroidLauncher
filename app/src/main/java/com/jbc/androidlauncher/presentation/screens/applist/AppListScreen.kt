@@ -35,9 +35,11 @@ import com.jbc.androidlauncher.presentation.components.AppDialog
 import com.jbc.androidlauncher.presentation.components.AppListTopAppBar
 import com.jbc.androidlauncher.ui.theme.BackgroundGrey
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppListScreen(appListViewModel: AppListViewModel) {
+
+    // funcion loadApps
+    appListViewModel.loadApps()
 
     // Lista de apps
     val apps by appListViewModel.apps.collectAsState()

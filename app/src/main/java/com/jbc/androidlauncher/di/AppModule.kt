@@ -5,6 +5,8 @@ import com.jbc.androidlauncher.data.AppRepository
 import com.jbc.androidlauncher.data.AppRepositoryImpl
 import com.jbc.androidlauncher.data.system.SystemRepository
 import com.jbc.androidlauncher.data.system.SystemRepositoryImpl
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 interface AppModule {
     val appRepository: AppRepository
@@ -16,7 +18,9 @@ class AppModuleImpl(
 ): AppModule {
 
     override val appRepository: AppRepository by lazy {
-        AppRepositoryImpl(appContext)
+        val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
+
+        AppRepositoryImpl(appContext, defaultDispatcher)
     }
 
     override val systemRepository: SystemRepository by lazy {

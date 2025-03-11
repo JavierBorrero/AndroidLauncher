@@ -2,19 +2,24 @@ package com.jbc.androidlauncher.data
 
 import android.content.Context
 import android.content.pm.PackageManager
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.withContext
 
-class AppRepositoryImpl (private val context: Context): AppRepository {
+class AppRepositoryImpl (
+    private val context: Context,
+    private val defaultDispatcher: CoroutineDispatcher
+): AppRepository {
 
     private val _mainScreenApps =  MutableStateFlow<List<AppInfo>>(emptyList())
     override val mainScreenApps: StateFlow<List<AppInfo>> get() = _mainScreenApps.asStateFlow()
 
-    override fun getAllApps(): List<AppInfo> {
+    override suspend fun getAllApps(): List<AppInfo> = withContext(defaultDispatcher) {
         val packageManager = context.packageManager
 
-        return packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+        return@withContext packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
             .filter { appInfo ->
                 packageManager.getLaunchIntentForPackage(appInfo.packageName) != null
             }
