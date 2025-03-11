@@ -4,14 +4,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jbc.androidlauncher.data.AppInfo
 import com.jbc.androidlauncher.data.AppRepository
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@OptIn(FlowPreview::class)
 class AppListViewModel (private val appRep: AppRepository): ViewModel() {
 
     // Listado apps
@@ -27,7 +32,11 @@ class AppListViewModel (private val appRep: AppRepository): ViewModel() {
     private val _isSearching = MutableStateFlow<Boolean>(false)
     val isSearching: StateFlow<Boolean> = _isSearching.asStateFlow()
 
+    private val _isLoading = MutableStateFlow<Boolean>(false)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+
     val apps= searchText
+        .debounce(500)
         .combine(_apps) {text, apps ->
             if(text.isBlank()) {
                 apps
@@ -45,7 +54,9 @@ class AppListViewModel (private val appRep: AppRepository): ViewModel() {
 
     fun loadApps() {
         viewModelScope.launch {
+            _isLoading.value = true
             _apps.value = appRep.getAllApps()
+            _isLoading.value = false
         }
     }
 
