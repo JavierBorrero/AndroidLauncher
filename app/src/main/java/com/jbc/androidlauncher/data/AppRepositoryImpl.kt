@@ -2,6 +2,8 @@ package com.jbc.androidlauncher.data
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.util.Log
+import android.widget.Toast
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -37,9 +39,14 @@ class AppRepositoryImpl (
 
     override fun addAppToMainScreen(app: AppInfo) {
         val currentList = _mainScreenApps.value.toMutableList()
-        if (!currentList.contains(app)) {
+        // any{} returns true if at least one element matches the given predicate
+        // si NO hay algun elemento en la lista con el name igual al app.name se añade a la lista
+        if (!currentList.any { it.name == app.name }) {
             currentList.add(app)
             _mainScreenApps.value = currentList
+            Toast.makeText(context, "${app.name} añadida a la lista", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "${app.name} ya esta en la lista", Toast.LENGTH_SHORT).show()
         }
     }
 

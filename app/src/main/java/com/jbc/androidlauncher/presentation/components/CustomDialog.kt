@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.jbc.androidlauncher.R
 import com.jbc.androidlauncher.data.AppInfo
 
@@ -36,7 +37,12 @@ fun AppDialog(
     onDismissRequest: () -> Unit,
     onAddToMain: () -> Unit,
 ) {
-    Dialog(onDismissRequest = { onDismissRequest() }) {
+    Dialog(
+        onDismissRequest = onDismissRequest,
+        properties = DialogProperties(
+            decorFitsSystemWindows = false
+        )
+    ) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
