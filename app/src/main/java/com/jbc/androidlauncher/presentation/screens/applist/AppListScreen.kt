@@ -63,8 +63,11 @@ fun AppListScreen(appListViewModel: AppListViewModel) {
     if(selectedApp != null){
         AppDialog(
             selectedApp!!,
+            appListViewModel.isOnMainScreen(selectedApp!!),
             onDismissRequest = { appListViewModel.dismissDialog() },
-            onAddToMain = { appListViewModel.onAddToMain() })
+            onAddToMain = { appListViewModel.onAddToMain() },
+            onRemoveFromMain = { appListViewModel.onRemoveFromMain() }
+        )
     }
 
     Column(

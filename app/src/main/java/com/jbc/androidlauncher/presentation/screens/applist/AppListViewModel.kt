@@ -11,9 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @OptIn(FlowPreview::class)
@@ -70,8 +68,16 @@ class AppListViewModel (private val appRep: AppRepository): ViewModel() {
         _selectedApp.value = null
     }
 
+    fun isOnMainScreen(app: AppInfo): Boolean {
+        return appRep.isAppOnMainScreen(app)
+    }
+
     fun onAddToMain() {
         appRep.addAppToMainScreen(_selectedApp.value!!)
+    }
+
+    fun onRemoveFromMain() {
+        appRep.removeAppFromMainScreen(_selectedApp.value!!)
     }
 
     fun onSearchTextChanged(text: String) {

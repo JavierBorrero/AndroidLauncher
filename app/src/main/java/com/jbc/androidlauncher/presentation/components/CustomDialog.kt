@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -34,8 +33,10 @@ import com.jbc.androidlauncher.data.AppInfo
 @Composable
 fun AppDialog(
     app: AppInfo?,
+    isAppOnMainScreen: Boolean,
     onDismissRequest: () -> Unit,
     onAddToMain: () -> Unit,
+    onRemoveFromMain: () -> Unit,
 ) {
     Dialog(
         onDismissRequest = onDismissRequest,
@@ -83,17 +84,34 @@ fun AppDialog(
                         onDismissRequest()
                     }
                 )
-                DialogActionButton(
-                    Modifier
-                        .height(60.dp)
-                        .fillMaxWidth(),
-                    painterResource(R.drawable.icon_add_home_screen),
-                    "Añadir a la pantalla de inicio",
-                    onClick = {
-                        onAddToMain()
-                        onDismissRequest()
-                    }
-                )
+                // Si la aplicacion esta en el MainScreen mostramos la opcion de eliminar
+                // Si la aplicacion no esta en el MainScreen mostramos la opcion de añadir
+                if(isAppOnMainScreen) {
+                    DialogActionButton(
+                        Modifier
+                            .height(60.dp)
+                            .fillMaxWidth(),
+                        painterResource(R.drawable.icon_add_home_screen),
+                        "Eliminar de la pantalla de inicio",
+                        onClick = {
+                            onRemoveFromMain()
+                            onDismissRequest()
+                        }
+                    )
+                } else {
+                    DialogActionButton(
+                        Modifier
+                            .height(60.dp)
+                            .fillMaxWidth(),
+                        painterResource(R.drawable.icon_add_home_screen),
+                        "Añadir a la pantalla de inicio",
+                        onClick = {
+                            onAddToMain()
+                            onDismissRequest()
+                        }
+                    )
+                }
+
                 DialogActionButton(
                      Modifier
                          .height(60.dp)

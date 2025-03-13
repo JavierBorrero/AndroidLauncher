@@ -2,7 +2,6 @@ package com.jbc.androidlauncher.data
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.util.Log
 import android.widget.Toast
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,6 +36,12 @@ class AppRepositoryImpl (
             }
     }
 
+    override fun isAppOnMainScreen(app: AppInfo): Boolean {
+        val currentList = _mainScreenApps.value.toMutableList()
+
+        return currentList.any { it.name == app.name }
+    }
+
     override fun addAppToMainScreen(app: AppInfo) {
         val currentList = _mainScreenApps.value.toMutableList()
         // any{} returns true if at least one element matches the given predicate
@@ -47,6 +52,17 @@ class AppRepositoryImpl (
             Toast.makeText(context, "${app.name} añadida a la lista", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(context, "${app.name} ya esta en la lista", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun removeAppFromMainScreen(app: AppInfo) {
+        val currentList = _mainScreenApps.value.toMutableList()
+
+        if(currentList.removeIf { currentList.any { it.name == app.name } }) {
+            _mainScreenApps.value = currentList
+            Toast.makeText(context, "${app.name} eliminada de la lista", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "${app.name} no esta en la lista", Toast.LENGTH_SHORT).show()
         }
     }
 
