@@ -1,11 +1,11 @@
 package com.jbc.androidlauncher.presentation.components
 
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -17,7 +17,11 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
@@ -29,7 +33,7 @@ import androidx.compose.ui.unit.sp
 import com.jbc.androidlauncher.R
 import com.jbc.androidlauncher.ui.theme.BackgroundGrey
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
+@OptIn(ExperimentalMaterial3Api::class,)
 @Composable
 fun AppListTopAppBar(
     isSearching: Boolean,
@@ -37,6 +41,15 @@ fun AppListTopAppBar(
     onSearchTextChanged: (String) -> Unit,
     onToggleSearch: (Boolean) -> Unit,
 ) {
+
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(isSearching) {
+        if(isSearching) {
+            focusRequester.requestFocus()
+        }
+    }
+
     TopAppBar(
         modifier = Modifier
             .padding(top = 18.dp),
@@ -44,12 +57,14 @@ fun AppListTopAppBar(
             containerColor = BackgroundGrey,
         ),
         title = {
-
             AnimatedContent(
                 targetState = isSearching,
                 content = { isSearching ->
                     if (isSearching) {
                         TextField(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .focusRequester(focusRequester),
                             value = searchText,
                             onValueChange = onSearchTextChanged,
                             placeholder = {
@@ -60,7 +75,6 @@ fun AppListTopAppBar(
                                 )
                             },
                             singleLine = true,
-                            modifier = Modifier.fillMaxWidth(),
                             textStyle = TextStyle(
                                 color = Color.White,
                                 fontSize = 20.sp,
