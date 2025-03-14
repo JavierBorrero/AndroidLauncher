@@ -32,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jbc.androidlauncher.R
+import com.jbc.androidlauncher.presentation.components.SystemInfo
 import com.jbc.androidlauncher.presentation.screens.applist.AppItem
 import com.jbc.androidlauncher.ui.theme.BackgroundGrey
 import kotlinx.coroutines.delay
@@ -78,9 +79,7 @@ fun MainScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 10.dp),
+                modifier = Modifier.weight(1f),
                 text = "Tus Aplicaciones",
                 fontSize = 24.sp,
                 fontFamily = FontFamily.Monospace,
@@ -115,41 +114,3 @@ fun MainScreen(
     }
 }
 
-@Composable
-fun SystemInfo(
-    batLevel: Int,
-    fTime: List<String>,
-    onClockClick: () -> Unit,
-    onCalendarClick: () -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(BackgroundGrey)
-            .padding(top = 36.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(
-            modifier = Modifier
-                .padding(start = 10.dp)
-                .clickable { onClockClick() },
-            fontSize = 32.sp,
-            text = fTime[0],
-            color = Color.White,
-        )
-        Text(
-            modifier = Modifier
-                .clickable { onCalendarClick() },
-            fontSize = 32.sp,
-            text = fTime[1],
-            color = Color.White
-        )
-        Text(
-            modifier = Modifier
-                .padding(end = 10.dp),
-            fontSize = 32.sp,
-            text = "$batLevel%",
-            color = Color.White,
-        )
-    }
-}
