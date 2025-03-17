@@ -1,5 +1,6 @@
 package com.jbc.androidlauncher.presentation.screens.main
 
+import android.content.Intent
 import androidx.lifecycle.ViewModel
 import com.jbc.androidlauncher.data.AppInfo
 import com.jbc.androidlauncher.data.AppRepository
@@ -21,8 +22,7 @@ class MainScreenViewModel(
     private val _systemTime: MutableStateFlow<List<String>> = MutableStateFlow(systemRep.getSystemDate())
     val systemTime: StateFlow<List<String>> = _systemTime.asStateFlow()
 
-    val clockIntent = systemRep.getClockIntent()
-    val calendarIntent = systemRep.getCalendarIntent()
+    val intentMap: Map<String, Intent?> = systemRep.intentsMap()
 
     fun updateBatteryLevel() {
         _batteryLevel.value = systemRep.getBatteryLevel()

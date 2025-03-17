@@ -2,20 +2,15 @@ package com.jbc.androidlauncher.presentation.screens.main
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -46,8 +41,7 @@ fun MainScreen(
     val apps by mainScreenViewModel.mainScreenApps.collectAsState()
     val batteryLevel by mainScreenViewModel.batteryLevel.collectAsState()
     val formatedTime by mainScreenViewModel.systemTime.collectAsState()
-    val clockIntent = mainScreenViewModel.clockIntent
-    val calendarIntent = mainScreenViewModel.calendarIntent
+    val intentMap = mainScreenViewModel.intentMap
 
     // actualizar cada 10 segs
     LaunchedEffect(true) {
@@ -65,17 +59,16 @@ fun MainScreen(
     ){
 
         SystemInfo(
+            context,
             batteryLevel,
             formatedTime,
-            onClockClick = { context.startActivity(clockIntent) },
-            onCalendarClick = { context.startActivity(calendarIntent) }
+            intentMap
         )
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(BackgroundGrey)
-                .padding(10.dp),
+                .background(BackgroundGrey),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(

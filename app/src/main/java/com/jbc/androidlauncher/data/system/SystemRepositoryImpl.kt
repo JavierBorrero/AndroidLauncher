@@ -10,9 +10,6 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.format
 import kotlinx.datetime.format.char
 import kotlinx.datetime.toLocalDateTime
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class SystemRepositoryImpl(
     private val context: Context
@@ -56,17 +53,28 @@ class SystemRepositoryImpl(
         return formatedTime
     }
 
-    override fun getClockIntent(): Intent {
-        // nombre de mi paquete de reloj, probar si en otros tlfs funciona
+    override fun intentsMap(): Map<String, Intent?> {
+
         val clockIntent = pm.getLaunchIntentForPackage("com.sec.android.app.clockpackage")
-
-        return clockIntent!!
-    }
-
-    override fun getCalendarIntent(): Intent {
-        // nombre de mi paquete de calendario, probar si en otros tlfs funciona
         val calendarIntent = pm.getLaunchIntentForPackage("com.samsung.android.calendar")
+        val settingsIntent = pm.getLaunchIntentForPackage("com.android.settings")
 
-        return calendarIntent!!
+        val intentMap = mapOf("clock" to clockIntent, "calendar" to calendarIntent, "settings" to settingsIntent)
+
+        return intentMap
     }
+
+//    override fun getClockIntent(): Intent {
+//        // nombre de mi paquete de reloj, probar si en otros tlfs funciona
+//        val clockIntent = pm.getLaunchIntentForPackage("com.sec.android.app.clockpackage")
+//
+//        return clockIntent!!
+//    }
+//
+//    override fun getCalendarIntent(): Intent {
+//        // nombre de mi paquete de calendario, probar si en otros tlfs funciona
+//        val calendarIntent = pm.getLaunchIntentForPackage("com.samsung.android.calendar")
+//
+//        return calendarIntent!!
+//    }
 }

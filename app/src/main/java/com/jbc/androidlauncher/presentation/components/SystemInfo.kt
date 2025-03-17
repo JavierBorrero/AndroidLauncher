@@ -1,5 +1,7 @@
 package com.jbc.androidlauncher.presentation.components
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,10 +28,10 @@ import com.jbc.androidlauncher.ui.theme.BackgroundGrey
 
 @Composable
 fun SystemInfo(
+    context: Context,
     batLevel: Int,
     fTime: List<String>,
-    onClockClick: () -> Unit,
-    onCalendarClick: () -> Unit,
+    intentMap: Map<String, Intent?>,
 ) {
     Row(
         modifier = Modifier
@@ -48,14 +50,14 @@ fun SystemInfo(
         ) {
             Text(
                 modifier = Modifier
-                    .clickable { onClockClick() },
+                    .clickable { context.startActivity(intentMap["clock"]) },
                 fontSize = 32.sp,
                 text = fTime[0],
                 color = Color.White
             )
             Text(
                 modifier = Modifier
-                    .clickable { onCalendarClick() },
+                    .clickable { context.startActivity(intentMap["calendar"]) },
                 fontSize = 30.sp,
                 text = fTime[1],
                 color = Color.White
@@ -90,10 +92,10 @@ fun SystemInfo(
                 .padding(end = 10.dp),
         ) {
             Row {
-                IconButton(onClick = {}) {
+                IconButton(onClick = { context.startActivity(intentMap["settings"]) }) {
                     Icon(
                         modifier = Modifier.size(30.dp),
-                        painter = painterResource(R.drawable.icon_add),
+                        painter = painterResource(R.drawable.icon_settings),
                         contentDescription = "icon",
                         tint = Color.White
                     )
@@ -102,7 +104,7 @@ fun SystemInfo(
                 IconButton(onClick = {}) {
                     Icon(
                         modifier = Modifier.size(30.dp),
-                        painter = painterResource(R.drawable.icon_add),
+                        painter = painterResource(R.drawable.icon_power),
                         contentDescription = "icon",
                         tint = Color.White
                     )
