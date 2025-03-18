@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
+    
+    <uses-permission android:name="android.permission.MANAGE_DEVICE_LOCK_STATE" />
 
     <application
         android:name=".MyApp"
@@ -27,6 +29,18 @@
                 <category android:name="android.intent.category.HOME" />
             </intent-filter>
         </activity>
-    </application>
 
+        <service
+            android:name=".service.LockAccessibilityService"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibility-service"
+                android:resource="@xml/accessibility_service" />
+        </service>
+
+    </application>
 </manifest>

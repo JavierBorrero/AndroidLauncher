@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -68,7 +69,8 @@ fun MainScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(BackgroundGrey),
+                .background(BackgroundGrey)
+                .padding(start = 10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -80,11 +82,15 @@ fun MainScreen(
                 color = Color.White
             )
 
-            IconButton(onClick = navigateToList) {
+            IconButton(
+                modifier = Modifier.padding(end = 10.dp),
+                onClick = navigateToList
+            ) {
                 Image(
                     painter = painterResource(R.drawable.icon_add),
                     contentDescription = "icon",
-                    modifier = Modifier.size(30.dp),
+                    modifier = Modifier
+                        .size(30.dp),
                     colorFilter = ColorFilter.tint(Color.White)
                 )
             }

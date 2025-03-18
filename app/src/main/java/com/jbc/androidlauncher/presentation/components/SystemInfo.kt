@@ -24,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jbc.androidlauncher.R
+import com.jbc.androidlauncher.service.lockScreenAccessibility
 import com.jbc.androidlauncher.ui.theme.BackgroundGrey
 
 @Composable
@@ -101,7 +102,7 @@ fun SystemInfo(
                     )
                 }
 
-                IconButton(onClick = {}) {
+                IconButton(onClick = { context.lockScreenAccessibility() }) {
                     Icon(
                         modifier = Modifier.size(30.dp),
                         painter = painterResource(R.drawable.icon_power),
