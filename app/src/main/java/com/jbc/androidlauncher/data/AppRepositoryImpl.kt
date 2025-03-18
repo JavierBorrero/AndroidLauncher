@@ -56,10 +56,12 @@ class AppRepositoryImpl (
     }
 
     override fun removeAppFromMainScreen(app: AppInfo) {
-        val currentList = _mainScreenApps.value.toMutableList()
 
-        if(currentList.any { it.name == app.name } ) {
-            currentList.remove(app)
+        val currentList = _mainScreenApps.value.toMutableList()
+        val removeApp = currentList.find { it.name == app.name }
+
+        if(removeApp != null) {
+            currentList.remove(removeApp)
             _mainScreenApps.value = currentList
             Toast.makeText(context, "${app.name} eliminada de la lista", Toast.LENGTH_SHORT).show()
         } else {
