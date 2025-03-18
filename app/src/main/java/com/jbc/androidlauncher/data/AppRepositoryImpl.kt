@@ -59,7 +59,7 @@ class AppRepositoryImpl (
         val currentList = _mainScreenApps.value.toMutableList()
 
         if(currentList.any { it.name == app.name } ) {
-            currentList.add(app)
+            currentList.remove(app)
             _mainScreenApps.value = currentList
             Toast.makeText(context, "${app.name} eliminada de la lista", Toast.LENGTH_SHORT).show()
         } else {
