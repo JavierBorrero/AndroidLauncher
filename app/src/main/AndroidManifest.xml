@@ -7,6 +7,12 @@
     
     <uses-permission android:name="android.permission.MANAGE_DEVICE_LOCK_STATE" />
 
+    <!-- Necesario para apagar pantalla (?)  -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"
+        tools:ignore="ProtectedPermissions" />
+
     <application
         android:name=".MyApp"
         android:allowBackup="true"
@@ -30,10 +36,14 @@
             </intent-filter>
         </activity>
 
+        <!-- Necesario para apagar pantalla (?) -->
+        <!-- Activar accesibilidad desde los ajustes del telefono -->
         <service
             android:name=".service.LockAccessibilityService"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
-            android:exported="true">
+            android:exported="false"
+            android:foregroundServiceType="specialUse"
+            tools:ignore="ForegroundServicePermission">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>
